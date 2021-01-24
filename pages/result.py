@@ -33,3 +33,4 @@ class DuckDuckGoResultPage:
     def print_info(self):
         print('Value:', self.brows.find_element(
             *self.SEARCH_INPUT).get_attribute('value'))
+

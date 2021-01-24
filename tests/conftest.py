@@ -3,10 +3,24 @@ import json
 import pytest
 import selenium.webdriver
 # from selenium import webdriver
+# Fixture with parameters for browseres
 
 
-@pytest.fixture
-def config(scope='session'):
+#  This fixture for test_lambda_automation.py
+@pytest.fixture(params=["chrome"], scope="class")
+def driver_init(request):
+    if request.param == "chrome":
+       web_driver = selenium.webdriver.Chrome()
+    if request.param == "ff":
+        web_driver = selenium.webdriver.Firefox()
+    request.cls.driver = web_driver
+    yield
+    web_driver.close()
+
+
+
+@pytest.fixture(scope='session')
+def config():
     # Read the file
     with open('config.json') as config_file:
         config = json.load(config_file)
@@ -19,26 +33,36 @@ def config(scope='session'):
     # Return config so it can be used
     return config
 
+
 @pytest.fixture
 def browser(config):
 
     # Initialize the WebDriver instance
     if config['browser'] == 'Firefox':
-        b = selenium.webdriver.Firefox()
+        driver = selenium.webdriver.Firefox()
     elif config['browser'] == 'Chrome':
-        b = selenium.webdriver.Chrome()
+        driver = selenium.webdriver.Chrome()
     elif config['browser'] == 'Headless Chrome':
         opts = selenium.webdriver.ChromeOptions()
         opts.add_argument('headless')
-        b = selenium.webdriver.Chrome(options=opts)
+        driver = selenium.webdriver.Chrome(options=opts)
     else:
         raise Exception(f"Browser '{config['browser']}' is not supported")
 
     # Make its calls wait up to 10 seconds for elements to appear
-    b.implicitly_wait(config["implicit_wait"])
+    driver.implicitly_wait(config["implicit_wait"])
 
     # Return the WebDriver instance for the setup
-    yield b
+    yield driver
 
     # Quit the WebDriver instance for the cleanup
-    b.quit()
+    driver.quit()
+
+
+
+
+# ____________________________________________________________
+@pytest.fixture(name='age')
+def some_data():
+    """Return answer to ultimate question."""
+    return 42
