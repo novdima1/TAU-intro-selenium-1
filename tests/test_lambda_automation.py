@@ -8,11 +8,10 @@ from selenium.webdriver.common.keys import Keys
 import time
 from time import sleep
 import sys
-from pages.BaseApp import BasicTest
+from pages.BaseApp import BasePage
 
 
-
-class Test_URL(BasicTest):
+class Test_URL(BasePage):
     # Run only this one test from console:
     # pytest -v -k "test_open_url_1" -s tests\test_lambda_automation.py
     def test_open_url_1(self):

@@ -5,9 +5,9 @@ import selenium.webdriver
 # from selenium import webdriver
 # Fixture with parameters for browseres
 
-
+"""
 #  This fixture for test_lambda_automation.py
-@pytest.fixture(params=["chrome"], scope="class")
+@pytest.fixture(params=["ff"], scope="class")
 def driver_init(request):
     if request.param == "chrome":
        web_driver = selenium.webdriver.Chrome()
@@ -16,8 +16,7 @@ def driver_init(request):
     request.cls.driver = web_driver
     yield
     web_driver.close()
-
-
+"""
 
 @pytest.fixture(scope='session')
 def config():

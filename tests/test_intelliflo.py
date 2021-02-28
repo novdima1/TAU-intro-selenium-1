@@ -14,6 +14,7 @@ PHRASE = [('novdima', 'testpass0')]
 @pytest.mark.intelliflo_login
 def test_login(browser, login, password):
     search_page = LoginPage(browser)
+    search_page.open_login_page()
     search_page.click_login()
     search_page.enter_credentials(login, password)
     #search_page.click_login_btn()
